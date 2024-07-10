@@ -1,0 +1,11 @@
+*.o
+*.a
+*.so
+*.out
+
+Makefile
+
+libforest.*
+
+test/
+.clangd
