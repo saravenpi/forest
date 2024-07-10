@@ -26,7 +26,8 @@ int main(int argc, char *argv[])
     set_default_end_of_message(server, "\r\n");
     start_server(server);
     return 0;
-}```
+}
+```
 
 You can compile your webserver with:
 ```bash
