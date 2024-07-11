@@ -49,7 +49,8 @@ void disconnect_client(forest_server_t *server, int client_fd);
 forest_server_t *init_server(int port);
 void start_server(forest_server_t *server);
 void send_response(int client_fd, const char *message, char *end_of_message);
-void send_to_all_clients(forest_server_t *server, const char *message);
+void send_to_all_clients(
+    forest_server_t *server, const char *message, char *end_of_message);
 
 void set_end_of_message(forest_server_t *server, char *end_of_message);
 void set_welcome_message(forest_server_t *server, char *welcome_message);
