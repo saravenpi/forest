@@ -27,7 +27,7 @@ void process_client_data(server_t *server, int client_fd, int index)
     strncat(server->buffers[index], buffer,
         BUFFER_SIZE - strlen(server->buffers[index]) - 1);
     message_complete =
-        strstr(server->buffers[index], server->default_end_of_message) != NULL;
+        strstr(server->buffers[index], server->end_of_message) != NULL;
     if (message_complete)
         handle_completed_message(server, client_fd, index);
 }

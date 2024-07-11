@@ -1,19 +1,5 @@
 #include "forest.h"
 
-void disconnect_client(server_t *server, int client_fd)
-{
-    for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (server->clients[i] == client_fd) {
-            close(client_fd);
-            server->clients[i] = 0;
-            memset(server->buffers[i], 0, BUFFER_SIZE);
-            printf(
-                "[FOREST] Client disconnected, socket fd is %d\n", client_fd);
-            break;
-        }
-    }
-}
-
 void check_new_connections(server_t *server)
 {
     int new_socket;
@@ -28,8 +14,12 @@ void check_new_connections(server_t *server)
         if (server->clients[i] == 0) {
             server->clients[i] = new_socket;
             printf("[FOREST] New connection, socket fd is: %d"
-                "%d\n",
+                   "%d\n",
                 new_socket, i);
+            if (server->welcome_message != NULL)
+                send_response(new_socket, server->welcome_message,
+                    server->end_of_message);
+            server->new_client_handler(new_socket);
             break;
         }
     }

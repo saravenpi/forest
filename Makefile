@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Werror -I.
-LIB_SRCS = src/connection.c \
+LIB_SRCS = src/client.c \
+		   src/connection.c \
 		   src/data.c \
 		   src/forest.c \
 		   src/message.c \
