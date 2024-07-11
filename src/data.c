@@ -13,7 +13,8 @@ void handle_completed_message(
     server->buffers[index][strlen(server->buffers[index]) - 2] = '\0';
     printf("[FOREST] Received message from client %d: %s\n", client_fd,
         server->buffers[index]);
-    server->message_handler(client_fd, server->buffers[index], server->data_ptr);
+    server->message_handler(
+        client_fd, server->buffers[index], server->data_ptr);
     memset(server->buffers[index], 0, BUFFER_SIZE);
 }
 
