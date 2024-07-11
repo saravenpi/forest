@@ -10,7 +10,7 @@
 void handle_client_connected(server_t *server, int client_fd, int i)
 {
     server->clients[i] = client_fd;
-    printf("[FOREST] New connection, socket fd is: %d", client_fd);
+    printf("[FOREST] New connection, socket fd is: %d\n", client_fd);
     if (server->welcome_message != NULL)
         send_response(
             client_fd, server->welcome_message, server->end_of_message);
