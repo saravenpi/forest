@@ -1,6 +1,7 @@
 #pragma once
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,12 +11,11 @@
 #include <unistd.h>
 
 #define BUFFER_SIZE 4096
-#define MAX_CLIENTS 100
-#define MAX_ROUTES 50
+#define MAX_CLIENTS 1000
 
 typedef void (*message_handler_t)(int client_fd, const char *message);
 
-typedef struct {
+struct server_t {
     int fd;
     int max_fd;
     int clients[MAX_CLIENTS];
@@ -25,15 +25,17 @@ typedef struct {
     int addrlen;
     char *default_end_of_message;
     message_handler_t handler;
-} server_t;
+};
+typedef struct server_t server_t;
 
-typedef struct {
+struct request_t {
     char *method;
     char *path;
     char *version;
     char *headers;
     char *body;
-} request_t;
+};
+typedef struct request_t request_trequest_t;
 
 void add_sockets_to_set(server_t *server);
 void check_new_connections(server_t *server);
@@ -43,7 +45,7 @@ void disconnect_client(server_t *server, int client_fd);
 
 server_t *init_server(int port);
 void start_server(server_t *server);
-void send_response(int client_fd, const char *body);
+void send_response(int client_fd, const char *message, char *end_of_message);
 void send_to_all_clients(server_t *server, const char *message);
 void set_default_end_of_message(server_t *server, char *end_of_message);
 void set_message_handler(server_t *server, message_handler_t handler);

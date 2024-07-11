@@ -21,12 +21,13 @@ void set_address(server_t *server, int port)
     }
 }
 
-void set_buffers(server_t *server)
+void set_client_slots(server_t *server)
 {
     for (int i = 0; i < MAX_CLIENTS; i++) {
         server->clients[i] = 0;
         memset(server->buffers[i], 0, BUFFER_SIZE);
     }
+    server->max_fd = server->fd;
 }
 
 server_t *init_server(int port)
@@ -44,8 +45,7 @@ server_t *init_server(int port)
         free(server);
         exit(EXIT_FAILURE);
     }
-    set_buffers(server);
-    server->max_fd = server->fd;
+    set_client_slots(server);
     server->handler = default_handler;
     server->default_end_of_message = "\r\n";
     return server;

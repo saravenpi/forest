@@ -12,5 +12,5 @@ void set_default_end_of_message(server_t *server, char *end_of_message)
 
 void default_handler(int client_fd, const char *message)
 {
-    return send_response(client_fd, "Hello, World!");
+    return send_response(client_fd, "Hello, World!", "\r\n");
 }
