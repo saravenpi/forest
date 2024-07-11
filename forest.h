@@ -38,15 +38,6 @@ struct server_t {
 };
 typedef struct server_t server_t;
 
-struct request_t {
-    char *method;
-    char *path;
-    char *version;
-    char *headers;
-    char *body;
-};
-typedef struct request_t request_trequest_t;
-
 void add_sockets_to_set(server_t *server);
 void check_new_connections(server_t *server);
 void handle_client_requests(server_t *server);
