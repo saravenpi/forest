@@ -7,7 +7,7 @@
 
 #include "forest.h"
 
-void set_address(server_t *server, int port)
+void set_address(forest_server_t *server, int port)
 {
     server->addrlen = sizeof(struct sockaddr_in);
     server->fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -28,7 +28,7 @@ void set_address(server_t *server, int port)
     }
 }
 
-void set_client_slots(server_t *server)
+void set_client_slots(forest_server_t *server)
 {
     for (int i = 0; i < MAX_CLIENTS; i++) {
         server->clients[i] = 0;
@@ -37,9 +37,10 @@ void set_client_slots(server_t *server)
     server->max_fd = server->fd;
 }
 
-server_t *init_server(int port)
+forest_server_t *init_server(int port)
 {
-    server_t *server = (server_t *)malloc(sizeof(server_t));
+    forest_server_t *server =
+        (forest_server_t *)malloc(sizeof(forest_server_t));
 
     if (!server) {
         perror("[FOREST] Failed to allocate memory for server");
@@ -56,11 +57,11 @@ server_t *init_server(int port)
     server->message_handler = default_message_handler;
     server->end_of_message = "\r\n";
     server->welcome_message = "Welcome to the forest";
-    server->data = NULL;
+    server->data_ptr = NULL;
     return server;
 }
 
-void start_server(server_t *server)
+void start_server(forest_server_t *server)
 {
     int activity;
 

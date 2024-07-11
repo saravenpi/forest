@@ -7,17 +7,17 @@
 
 #include "forest.h"
 
-void handle_client_connected(server_t *server, int client_fd, int i)
+void handle_client_connected(forest_server_t *server, int client_fd, int i)
 {
     server->clients[i] = client_fd;
     printf("[FOREST] New connection, socket fd is: %d\n", client_fd);
     if (server->welcome_message != NULL)
         send_response(
             client_fd, server->welcome_message, server->end_of_message);
-    server->new_client_handler(client_fd, server->data);
+    server->new_client_handler(client_fd, server->data_ptr);
 }
 
-void check_new_connections(server_t *server)
+void check_new_connections(forest_server_t *server)
 {
     int new_socket;
 
@@ -35,7 +35,7 @@ void check_new_connections(server_t *server)
     }
 }
 
-void add_client_to_set(server_t *server, int client_fd)
+void add_client_to_set(forest_server_t *server, int client_fd)
 {
     if (client_fd > 0) {
         FD_SET(client_fd, &server->read_fd_set);
@@ -44,7 +44,7 @@ void add_client_to_set(server_t *server, int client_fd)
     }
 }
 
-void add_sockets_to_set(server_t *server)
+void add_sockets_to_set(forest_server_t *server)
 {
     FD_ZERO(&server->read_fd_set);
     FD_SET(server->fd, &server->read_fd_set);
@@ -53,7 +53,7 @@ void add_sockets_to_set(server_t *server)
         add_client_to_set(server, server->clients[i]);
 }
 
-void handle_client_requests(server_t *server)
+void handle_client_requests(forest_server_t *server)
 {
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (server->clients[i] > 0 &&

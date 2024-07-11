@@ -20,10 +20,10 @@ Here is an example implementation using the wave library:
 
 int main(int argc, char *argv[])
 {
-    server_t *server = init_server(PORT);
+    forest_server_t *server = init_server(PORT);
 
     set_message_handler(server, default_handler);
-    set_default_end_of_message(server, "\r\n");
+    set_end_of_message(server, "\r\n");
     start_server(server);
     return 0;
 }

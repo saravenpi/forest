@@ -7,7 +7,7 @@
 
 #include "forest.h"
 
-void disconnect_client(server_t *server, int client_fd)
+void disconnect_client(forest_server_t *server, int client_fd)
 {
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (server->clients[i] == client_fd) {

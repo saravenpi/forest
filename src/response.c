@@ -28,7 +28,7 @@ void send_response(int client_fd, const char *message, char *end_of_message)
         perror("[FOREST] Failed to send response");
 }
 
-void send_to_all_clients(server_t *server, const char *message)
+void send_to_all_clients(forest_server_t *server, const char *message)
 {
     char response[BUFFER_SIZE];
 

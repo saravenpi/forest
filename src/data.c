@@ -7,16 +7,17 @@
 
 #include "forest.h"
 
-void handle_completed_message(server_t *server, int client_fd, int index)
+void handle_completed_message(
+    forest_server_t *server, int client_fd, int index)
 {
     server->buffers[index][strlen(server->buffers[index]) - 2] = '\0';
     printf("[FOREST] Received message from client %d: %s\n", client_fd,
         server->buffers[index]);
-    server->message_handler(client_fd, server->buffers[index], server->data);
+    server->message_handler(client_fd, server->buffers[index], server->data_ptr);
     memset(server->buffers[index], 0, BUFFER_SIZE);
 }
 
-void process_client_data(server_t *server, int client_fd, int index)
+void process_client_data(forest_server_t *server, int client_fd, int index)
 {
     int valread;
     char buffer[BUFFER_SIZE];
