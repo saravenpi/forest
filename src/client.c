@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** client.c
+*/
+
 #include "forest.h"
 
 void disconnect_client(server_t *server, int client_fd)

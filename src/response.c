@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** response.c
+*/
+
 #include "forest.h"
 
 void send_response(int client_fd, const char *message, char *end_of_message)

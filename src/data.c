@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** data.c
+*/
+
 #include "forest.h"
 
 void handle_completed_message(server_t *server, int client_fd, int index)

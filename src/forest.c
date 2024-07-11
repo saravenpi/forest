@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** forest.c
+*/
+
 #include "forest.h"
 
 void set_address(server_t *server, int port)

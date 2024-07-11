@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** message.c
+*/
+
 #include "forest.h"
 
 void set_message_handler(server_t *server, message_handler_t handler)

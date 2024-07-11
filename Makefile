@@ -1,3 +1,10 @@
+##
+## EPITECH PROJECT, 2024
+## forest
+## File description:
+## Makefile
+##
+
 CC = gcc
 CFLAGS = -Wall -Werror -I.
 LIB_SRCS = src/client.c \

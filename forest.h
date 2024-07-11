@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** message.c
+*/
+
 #pragma once
 #include <arpa/inet.h>
 #include <netinet/in.h>

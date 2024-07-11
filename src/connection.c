@@ -1,4 +1,21 @@
+/*
+** EPITECH PROJECT, 2024
+** forest
+** File description:
+** connection.c
+*/
+
 #include "forest.h"
+
+void handle_client_connected(server_t *server, int client_fd, int i)
+{
+    server->clients[i] = client_fd;
+    printf("[FOREST] New connection, socket fd is: %d", client_fd);
+    if (server->welcome_message != NULL)
+        send_response(
+            client_fd, server->welcome_message, server->end_of_message);
+    server->new_client_handler(client_fd);
+}
 
 void check_new_connections(server_t *server)
 {
@@ -12,14 +29,7 @@ void check_new_connections(server_t *server)
     }
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (server->clients[i] == 0) {
-            server->clients[i] = new_socket;
-            printf("[FOREST] New connection, socket fd is: %d"
-                   "%d\n",
-                new_socket, i);
-            if (server->welcome_message != NULL)
-                send_response(new_socket, server->welcome_message,
-                    server->end_of_message);
-            server->new_client_handler(new_socket);
+            handle_client_connected(server, new_socket, i);
             break;
         }
     }
