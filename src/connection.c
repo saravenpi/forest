@@ -14,7 +14,7 @@ void handle_client_connected(server_t *server, int client_fd, int i)
     if (server->welcome_message != NULL)
         send_response(
             client_fd, server->welcome_message, server->end_of_message);
-    server->new_client_handler(client_fd);
+    server->new_client_handler(client_fd, server->data);
 }
 
 void check_new_connections(server_t *server)

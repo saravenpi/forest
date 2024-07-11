@@ -12,7 +12,8 @@ LIB_SRCS = src/client.c \
 		   src/data.c \
 		   src/forest.c \
 		   src/message.c \
-		   src/response.c
+		   src/response.c \
+		   src/settings.c
 
 LIB_OBJS = $(LIB_SRCS:.c=.o)
 LIB_NAME = libforest.so

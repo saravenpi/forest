@@ -53,9 +53,10 @@ server_t *init_server(int port)
         exit(EXIT_FAILURE);
     }
     set_client_slots(server);
-    server->handler = default_handler;
+    server->message_handler = default_message_handler;
     server->end_of_message = "\r\n";
     server->welcome_message = "Welcome to the forest";
+    server->data = NULL;
     return server;
 }
 

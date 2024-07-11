@@ -21,12 +21,7 @@ void disconnect_client(server_t *server, int client_fd)
     }
 }
 
-void set_new_client_handler(server_t *server, new_client_handler_t handler)
+void default_new_client_handler(int client_fd, void *data)
 {
-    server->new_client_handler = handler;
-}
-
-void default_new_client_handler(int client_fd)
-{
-    return send_response(client_fd, "Welcome to the forest", "\r\n");
+    send_response(client_fd, "Welcome to the forest", "\r\n");
 }
