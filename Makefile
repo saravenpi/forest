@@ -7,13 +7,9 @@
 
 CC = gcc
 CFLAGS = -Wall -Werror -I.
-LIB_SRCS = src/client.c \
-		   src/connection.c \
-		   src/data.c \
-		   src/forest.c \
-		   src/message.c \
-		   src/response.c \
-		   src/settings.c
+
+SRC_DIR = src
+LIB_SRCS := $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/*/*.c)
 
 LIB_OBJS = $(LIB_SRCS:.c=.o)
 LIB_NAME = libforest.so

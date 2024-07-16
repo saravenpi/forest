@@ -6,6 +6,7 @@
 */
 
 #include "forest.h"
+#include <sys/socket.h>
 
 void handle_client_connected(forest_server_t *server, int client_fd, int i)
 {
@@ -14,7 +15,8 @@ void handle_client_connected(forest_server_t *server, int client_fd, int i)
     if (server->welcome_message != NULL)
         send_response(
             client_fd, server->welcome_message, server->end_of_message);
-    server->new_client_handler(client_fd, server->data_ptr);
+    if (server->new_client_handler != NULL)
+        server->new_client_handler(client_fd, server->data_ptr);
 }
 
 void check_new_connections(forest_server_t *server)

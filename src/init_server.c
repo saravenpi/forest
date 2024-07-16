@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** forest
 ** File description:
-** forest.c
+** init_server.c
 */
 
 #include "forest.h"
@@ -37,6 +37,22 @@ void set_client_slots(forest_server_t *server)
     server->max_fd = server->fd;
 }
 
+void init_server_settings(forest_server_t *server)
+{
+    server->timeout.tv_sec = 0;
+    server->timeout.tv_nsec = SELECT_INTERVAL_NSEC;
+    server->message_handler = NULL;
+    server->new_client_handler = NULL;
+    server->disconnect_handler = NULL;
+    server->live_handler = NULL;
+    server->stop_handler = NULL;
+    server->end_of_message = "\r\n";
+    server->welcome_message = NULL;
+    server->data_ptr = NULL;
+    FD_ZERO(&server->read_fd_set);
+    FD_SET(server->fd, &server->read_fd_set);
+}
+
 forest_server_t *init_server(int port)
 {
     forest_server_t *server =
@@ -46,6 +62,7 @@ forest_server_t *init_server(int port)
         perror("[FOREST] Failed to allocate memory for server");
         exit(EXIT_FAILURE);
     }
+    init_server_settings(server);
     set_address(server, port);
     if (listen(server->fd, 3) < 0) {
         perror("[FOREST] Listen failed");
@@ -54,31 +71,5 @@ forest_server_t *init_server(int port)
         exit(EXIT_FAILURE);
     }
     set_client_slots(server);
-    server->message_handler = default_message_handler;
-    server->end_of_message = "\r\n";
-    server->welcome_message = "Welcome to the forest";
-    server->data_ptr = NULL;
     return server;
-}
-
-void start_server(forest_server_t *server)
-{
-    int activity;
-
-    printf("🌳 Server started !\n");
-    printf("[FOREST] server port: %d\n", ntohs(server->address.sin_port));
-    printf("[FOREST] server host: %s\n", inet_ntoa(server->address.sin_addr));
-    while (1) {
-        add_sockets_to_set(server);
-        activity =
-            select(server->max_fd + 1, &server->read_fd_set, NULL, NULL, NULL);
-        if (activity < 0) {
-            perror("[FOREST] Select failed");
-            break;
-        }
-        if (FD_ISSET(server->fd, &server->read_fd_set))
-            check_new_connections(server);
-        handle_client_requests(server);
-    }
-    printf("[FOREST] server shutting down\n");
 }

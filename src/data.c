@@ -10,11 +10,14 @@
 void handle_completed_message(
     forest_server_t *server, int client_fd, int index)
 {
-    server->buffers[index][strlen(server->buffers[index]) - 2] = '\0';
+    server->buffers[index][strlen(server->buffers[index]) -
+        strlen(server->end_of_message)] = '\0';
     printf("[FOREST] Received message from client %d: %s\n", client_fd,
         server->buffers[index]);
-    server->message_handler(
-        client_fd, server->buffers[index], server->data_ptr);
+    if (server->message_handler != NULL) {
+        server->message_handler(
+            client_fd, server->buffers[index], server->data_ptr);
+    }
     memset(server->buffers[index], 0, BUFFER_SIZE);
 }
 
