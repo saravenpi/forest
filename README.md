@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 }
 ```
 
-You can compile your webserver with:
+You can compile your socket server with:
 ```bash
 gcc main.c -I. -lforest -L. -Wl,-rpath,.
 ```
